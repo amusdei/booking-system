@@ -1,0 +1,6 @@
+streamlit
+duckdb
+sqlalchemy
+psycopg2-binary
+python-dotenv
+faker
