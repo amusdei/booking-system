@@ -77,7 +77,7 @@ def seed_data(session: Session):
     session.commit()
 
     print("Seeding Bookings (Targeting >2000 rows)...")
-    # CHANGED: Start in Jan 2025 so bookings overlap with the Graffiti interventions!
+   
     start_semester = datetime(2025, 1, 1, 8, 0)
     booking_count = 0
 
@@ -118,29 +118,32 @@ def seed_incidents(session: Session):
     buildings = ["Cataño Science Center", "San Juan Hall", "Main Library"]
     incidents = []
     
-    # Pre-intervention: May 2025 (high frequency)
-    for day in range(1, 31):
-        if random.random() < 0.4:
+# PRE-INTERVENTION: May 2025 (Low Frequency / Normal Baseline)
+    print("Seeding Pre-Intervention Incidents (Low Frequency)...")
+    for day in range(1, 32): 
+        if random.random() < 0.10:
             incidents.append(
                 Incident(
                     incident_type="Graffiti",
-                    building_name=random.choice(buildings),
+                    building_name=random.choice(["Cataño Science Center", "San Juan Hall", "Main Library"]),
                     reported_date=datetime(2025, 5, day, random.randint(8, 22), random.randint(0, 59))
                 )
             )
-    
-    # Post-intervention: June 2025 onwards (lower frequency)
+            
+    # POST-INTERVENTION: June-August 2025 (High Frequency / Retaliation Spike)
+    print("Seeding Post-Intervention Incidents (High Frequency Retaliation)...")
     for month in range(6, 9):
-        days_in_month = 31 if month in [6, 8] else 30
+        days_in_month = 31 if month in [7, 8] else 30
         for day in range(1, days_in_month + 1):
-            if random.random() < 0.15:
+            if random.random() < 0.60:  # Spikes to a 60% chance of graffiti per day!
                 incidents.append(
                     Incident(
                         incident_type="Graffiti",
-                        building_name=random.choice(buildings),
+                        building_name=random.choice(["Cataño Science Center", "San Juan Hall", "Main Library"]),
                         reported_date=datetime(2025, month, day, random.randint(8, 22), random.randint(0, 59))
                     )
                 )
+                    
     
     session.add_all(incidents)
     session.commit()

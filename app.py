@@ -40,7 +40,6 @@ tab1, tab2 = st.tabs(["BOOKING", "Analytical Dashboard"])
 
 with tab1:
     st.header("Make a Reservation")
-    st.markdown("This interface interacts strictly with the PostgreSQL database via the `BookingRepository`.")
     
     with st.form("booking_form"):
         col1, col2 = st.columns(2)
@@ -98,7 +97,6 @@ with tab2:
 
     try:
         ranking_df = analytics.get_utilization_ranking()
-        # UPDATED: Replaced use_container_width with width='stretch'
         st.dataframe(ranking_df, width='stretch')
     except Exception as e:
         st.error(f"Could not load ranking: {e}")
@@ -113,7 +111,6 @@ with tab2:
 
         try:
             hoarding_df = analytics.get_hoarding_analysis()
-            # UPDATED: Replaced use_container_width with width='stretch'
             st.dataframe(hoarding_df, width='stretch')
         except Exception as e:
              st.error(f"Could not load hoarding analysis: {e}")
@@ -150,7 +147,7 @@ with tab2:
                 st.line_chart(incident_correlation_df.set_index('activity_month')['graffiti_incidents'])
                 
             with col_data:
-                # UPDATED: Replaced use_container_width with width='stretch'
+        
                 st.dataframe(incident_correlation_df, width='stretch')
         else:
             st.info("No incident correlation data available for the specified timeframe.")

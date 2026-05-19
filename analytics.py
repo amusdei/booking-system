@@ -17,12 +17,11 @@ class AnalyticsEngine:
             raise ValueError("DATABASE_URL is missing from .env")
         
 
-        # DuckDB INTITIZALIZATION
+        # DuckDB INITIALIZATION
         self.conn = duckdb.connect(database=':memory:')
         
 
         # PostgreSQL SETUP
-        self.conn.execute("INSTALL postgres;")
         self.conn.execute("LOAD postgres;")
 
 
